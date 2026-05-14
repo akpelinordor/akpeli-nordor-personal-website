@@ -1,0 +1,956 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Akpeli Nordor</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<link rel="icon" href="assets/monogram.svg">
+<style>
+  /* ── Page scaffolding ─────────────────────────────── */
+  html, body { margin: 0; }
+  body { background: var(--cream); color: var(--ink); font-family: var(--serif-body); }
+  .page { max-width: var(--max-width); margin: 0 auto; }
+  main { padding: 0 var(--gutter); }
+
+  /* ── Masthead ─────────────────────────────────────── */
+  .mast-wrap { position: sticky; top: 0; z-index: 10; background: var(--cream);
+    transition: border-color var(--dur-2) var(--ease); }
+  .mast-meta { display: flex; justify-content: space-between; padding: 8px var(--gutter);
+    font-family: var(--mono); font-size: 11px; color: var(--ink-rule);
+    letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid var(--ink-12); }
+  .mast-meta .mast-meta-mid { letter-spacing: 0.12em; }
+  .mast { height: var(--masthead-h); display: flex; align-items: center; gap: 32px;
+    padding: 0 var(--gutter); border-bottom: 1px solid var(--ink-12);
+    transition: border-color var(--dur-2) var(--ease); }
+  .mast-wrap.is-scrolled .mast { border-bottom-color: var(--ink-24); }
+  .mast-mark { font-family: var(--serif-display); font-size: 26px; font-weight: 600;
+    color: var(--forest); letter-spacing: -0.025em; text-decoration: none;
+    line-height: 1; }
+  .mast-mark:hover { color: var(--forest-deep); }
+  .mast-nav { display: flex; gap: 32px; margin-left: auto; align-items: center; }
+  .mast-nav a { font-family: var(--sans); font-size: 14px; color: var(--ink-muted);
+    text-decoration: none; padding: 18px 0; position: relative;
+    transition: color var(--dur-2) var(--ease); letter-spacing: 0.005em; }
+  .mast-nav a:hover { color: var(--forest); }
+  .mast-nav a.curr { color: var(--forest); }
+  .mast-nav a.curr::after { content: ""; position: absolute; left: 0; right: 0; bottom: 14px;
+    height: 1.5px; background: var(--forest); }
+
+  /* ── Section frame (scientific plate marks at corners) ── */
+  .section { position: relative; padding: var(--space-24) 0; }
+  .section--alt { background: var(--cream-cool); margin: 0 calc(-1 * var(--gutter));
+    padding-left: var(--gutter); padding-right: var(--gutter); }
+
+  /* Two-column section grid: meta column + content column */
+  .grid {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 64px;
+  }
+  .grid-meta { padding-top: 6px; }
+  .grid-content { max-width: 720px; }
+
+  /* Section number / eyebrow */
+  .sec-num {
+    font-family: var(--serif-display);
+    font-size: 14px;
+    font-style: italic;
+    color: var(--mustard-deep);
+    letter-spacing: 0;
+    margin-bottom: 10px;
+  }
+  .sec-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-rule);
+    line-height: 1.5;
+  }
+  .sec-label .sub {
+    display: block;
+    color: var(--ink-rule);
+    margin-top: 4px;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: none;
+    font-style: italic;
+    font-family: var(--serif-body);
+  }
+
+  /* Section divider — the persistent hairline */
+  .section + .section { border-top: 1px solid var(--ink-12); }
+  .section--alt + .section { border-top: none; }
+
+  /* ── Hero ─────────────────────────────────────────── */
+  .hero { padding: 120px 0 96px; position: relative; }
+  .hero .grid { grid-template-columns: 200px 1fr; }
+  .hero-mark { position: absolute; top: 96px; right: 0; opacity: 0.55; }
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-rule);
+    margin-bottom: 28px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .hero-eyebrow .ph { font-size: 13px; opacity: 0.7; }
+  .hero-eyebrow .dot { opacity: 0.4; }
+
+  .hero-title {
+    font-family: var(--serif-display);
+    font-size: 92px;
+    line-height: 1.02;
+    letter-spacing: -0.028em;
+    color: var(--forest);
+    font-weight: 500;
+    margin: 0;
+    max-width: 14ch;
+    text-wrap: balance;
+  }
+  .hero-title .em {
+    font-style: italic;
+    color: var(--forest);
+  }
+  .hero-stack > p {
+    font-family: var(--serif-body);
+    font-size: 21px;
+    line-height: 1.5;
+    color: var(--ink);
+    max-width: 56ch;
+    margin: 0;
+    font-weight: 400;
+  }
+  .hero-stack > p + p { margin-top: 18px; }
+  .hero-stack {
+    margin-top: 44px;
+    padding-top: 28px;
+    border-top: 1px solid var(--ink-12);
+    max-width: 56ch;
+  }
+  .hero-stack .last {
+    color: var(--forest);
+    font-family: var(--serif-display);
+    font-size: 26px;
+    line-height: 1.3;
+    letter-spacing: -0.012em;
+    font-weight: 500;
+    margin-top: 28px !important;
+    max-width: 24ch;
+    font-style: italic;
+  }
+
+  /* ── Point of View ────────────────────────────────── */
+  .pov-title {
+    font-family: var(--serif-display);
+    font-size: 36px;
+    line-height: 1.18;
+    letter-spacing: -0.018em;
+    color: var(--forest);
+    font-weight: 500;
+    margin: 0 0 36px;
+    max-width: 22ch;
+    text-wrap: balance;
+  }
+
+  .pov-body p {
+    font-family: var(--serif-body);
+    font-size: 19px;
+    line-height: 1.65;
+    color: var(--ink);
+    margin: 0 0 22px;
+    max-width: 60ch;
+  }
+  .pov-body p:last-child { margin-bottom: 0; }
+  .pov-body em { font-style: italic; color: var(--forest); }
+  .pov-body .closing {
+    margin-top: 36px;
+    padding-top: 22px;
+    border-top: 1px solid var(--ink-12);
+    color: var(--forest);
+    font-style: italic;
+    font-size: 21px;
+    line-height: 1.45;
+    max-width: 38ch;
+  }
+
+  /* ── Now ──────────────────────────────────────────── */
+  .now-title {
+    font-family: var(--serif-display);
+    font-size: 32px;
+    color: var(--forest);
+    letter-spacing: -0.015em;
+    font-weight: 500;
+    margin: 0 0 18px;
+  }
+  .now-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-rule);
+    margin-bottom: 24px;
+  }
+  .now-status .pulse {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--mustard);
+    box-shadow: 0 0 0 0 rgba(184, 134, 27, 0.55);
+    animation: pulse 2.4s var(--ease) infinite;
+  }
+  @keyframes pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(184, 134, 27, 0.45); }
+    70%  { box-shadow: 0 0 0 8px rgba(184, 134, 27, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(184, 134, 27, 0); }
+  }
+  .now-body {
+    font-family: var(--serif-body);
+    font-size: 20px;
+    line-height: 1.55;
+    color: var(--ink);
+    max-width: 52ch;
+    margin: 0;
+  }
+  .now-meta {
+    margin-top: 28px;
+    display: flex; gap: 18px; align-items: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-rule);
+  }
+  .now-meta .dot { opacity: 0.4; }
+  .now-meta .ph { font-size: 13px; opacity: 0.7; }
+
+  /* ── Connect ──────────────────────────────────────── */
+  .connect-title {
+    font-family: var(--serif-display);
+    font-size: 56px;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: var(--forest);
+    font-weight: 500;
+    margin: 0 0 28px;
+    max-width: 18ch;
+    text-wrap: balance;
+  }
+  .connect-body {
+    font-family: var(--serif-body);
+    font-size: 20px;
+    line-height: 1.55;
+    color: var(--ink);
+    max-width: 52ch;
+    margin: 0 0 40px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: var(--cream);
+    background: var(--forest);
+    border: 1px solid var(--forest);
+    padding: 14px 24px;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 0;
+    transition: background var(--dur-2) var(--ease),
+                border-color var(--dur-2) var(--ease),
+                box-shadow var(--dur-1) var(--ease),
+                transform var(--dur-1) var(--ease);
+  }
+  .btn:hover {
+    background: var(--forest-deep);
+    border-color: var(--forest-deep);
+    color: var(--cream);
+  }
+  .btn:active {
+    box-shadow: inset 0 -1px 0 0 rgba(0,0,0,0.18);
+    transform: translateY(0.5px);
+  }
+  .btn .arrow { transition: transform var(--dur-2) var(--ease); }
+  .btn:hover .arrow { transform: translateX(3px); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--forest);
+    border-color: var(--forest);
+  }
+  .btn-secondary:hover {
+    background: transparent;
+    color: var(--navy);
+    border-color: var(--navy);
+  }
+
+  .connect-actions { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .connect-meta {
+    margin-top: 48px;
+    padding-top: 22px;
+    border-top: 1px solid var(--ink-12);
+    display: flex; gap: 24px; flex-wrap: wrap;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--ink-rule);
+  }
+  .connect-meta a { color: var(--ink); text-decoration: none;
+    border-bottom: 1px solid var(--ink-24); padding-bottom: 1px; }
+  .connect-meta a:hover { color: var(--forest); border-bottom-color: var(--forest); }
+
+  /* ── Footer ───────────────────────────────────────── */
+  .ftr {
+    margin-top: var(--space-24);
+    padding: 48px var(--gutter) 32px;
+    border-top: 1px solid var(--ink);
+  }
+  .ftr-grid { display: grid; grid-template-columns: 1fr auto auto; gap: 32px; align-items: center; }
+  .ftr-mono {
+    width: 56px; height: 56px; border: 1px solid var(--forest);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif-display); font-size: 26px; font-weight: 600;
+    color: var(--forest); letter-spacing: -0.03em;
+  }
+  .ftr-meta {
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-rule); line-height: 1.6;
+  }
+  .ftr-meta strong {
+    display: block; font-weight: 400;
+    color: var(--ink); letter-spacing: 0.06em; margin-bottom: 3px;
+  }
+
+  .ftr-social {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+  }
+  .ftr-social a,
+  .ftr-social .soon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    color: var(--forest);
+    text-decoration: none;
+    border: none;
+    transition: color var(--dur-2) var(--ease), transform var(--dur-2) var(--ease);
+  }
+  .ftr-social a:hover {
+    color: var(--mustard-deep);
+    transform: translateY(-1px);
+  }
+  .ftr-social .soon {
+    color: var(--ink-24);
+    cursor: not-allowed;
+  }
+  .ftr-set { font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.08em; color: var(--ink-rule);
+    text-transform: uppercase; text-align: right; }
+
+  /* ── Contact ──────────────────────────────────────── */
+  .contact { padding: 96px 0 64px; }
+  .contact-title {
+    font-family: var(--serif-display);
+    font-size: 64px;
+    line-height: 1.05;
+    letter-spacing: -0.022em;
+    color: var(--forest);
+    font-weight: 500;
+    margin: 0 0 24px;
+    max-width: 14ch;
+    text-wrap: balance;
+  }
+  .contact-lede {
+    font-family: var(--serif-body);
+    font-size: 20px;
+    line-height: 1.55;
+    color: var(--ink);
+    max-width: 56ch;
+    margin: 0 0 56px;
+  }
+  .form { display: grid; gap: 28px; max-width: 640px; }
+  .field { display: grid; gap: 8px; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .field-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-rule);
+  }
+  .field-label .req { color: var(--mustard-deep); margin-left: 2px; }
+  .input, .textarea, .select {
+    font-family: var(--serif-body);
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--ink-24);
+    border-radius: 0;
+    padding: 12px 14px;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color var(--dur-2) var(--ease),
+                box-shadow var(--dur-2) var(--ease);
+  }
+  .input:focus, .textarea:focus, .select:focus {
+    border-color: var(--forest);
+    box-shadow: inset 0 0 0 1px var(--forest);
+  }
+  .textarea { min-height: 160px; resize: vertical; font-size: 18px; }
+  .select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' width='12' height='8'><path d='M1 1L6 6L11 1' stroke='%231B3A2D' stroke-width='1.25' fill='none'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 38px;
+  }
+  .form-foot {
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .form-note {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--ink-rule);
+    max-width: 36ch;
+    line-height: 1.5;
+  }
+  .form-error {
+    font-family: var(--serif-body);
+    font-size: 14px;
+    color: var(--navy);
+    font-style: italic;
+    margin-top: 4px;
+  }
+  .form-success {
+    border: 1.5px solid var(--ink);
+    background: var(--paper);
+    padding: 32px 36px;
+    max-width: 560px;
+  }
+  .form-success .dagger {
+    color: var(--mustard-deep);
+    font-family: var(--serif-display);
+    font-size: 22px;
+    margin-right: 6px;
+  }
+  .form-success h3 {
+    font-family: var(--serif-display);
+    font-size: 28px;
+    color: var(--forest);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    margin: 0 0 12px;
+  }
+  .form-success p {
+    font-family: var(--serif-body);
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+    margin: 0;
+    max-width: 48ch;
+  }
+
+  /* ── Placeholder for About/Publications ───────────── */
+  .placeholder {
+    padding: 120px 0;
+  }
+  .placeholder h1 {
+    font-family: var(--serif-display);
+    font-size: 64px;
+    color: var(--forest);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin: 0 0 18px;
+  }
+  .placeholder p {
+    font-family: var(--serif-body);
+    font-size: 19px;
+    color: var(--ink-muted);
+    max-width: 52ch;
+    font-style: italic;
+  }
+
+  /* ── Decorative marks ─────────────────────────────── */
+  .mark-cross {
+    width: 18px; height: 18px;
+    display: inline-block;
+    background-image: url('assets/marks/hairline-cross.svg');
+    background-size: contain; background-repeat: no-repeat;
+    opacity: 0.5;
+  }
+  .mark-corner {
+    width: 16px; height: 16px;
+    background-image: url('assets/marks/corner-tick.svg');
+    background-size: contain; background-repeat: no-repeat;
+  }
+
+  /* Reveal on scroll */
+  .reveal { opacity: 0; transform: translateY(8px);
+    transition: opacity var(--dur-3) var(--ease), transform var(--dur-3) var(--ease); }
+  .reveal.is-in { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 720px) {
+    .field-row { grid-template-columns: 1fr; }
+  }
+  /* ── Responsive ───────────────────────────────────── */
+  @media (max-width: 960px) {
+    main { padding: 0 32px; }
+    .mast, .mast-meta { padding-left: 32px; padding-right: 32px; }
+    .ftr { padding-left: 32px; padding-right: 32px; }
+    .section--alt { margin: 0 -32px; padding-left: 32px; padding-right: 32px; }
+    .grid { grid-template-columns: 1fr; gap: 28px; }
+    .grid-meta { padding-top: 0; }
+    .hero { padding: 64px 0 56px; }
+    .hero-title { font-size: 56px; }
+    .hero-mark { display: none; }
+    .pov-title { font-size: 28px; }
+    .connect-title { font-size: 40px; }
+    .mast-meta { display: none; }
+    .mast-nav { gap: 22px; }
+    .ftr-grid { grid-template-columns: 1fr; } .ftr-social { grid-column: 1 / -1; padding-top: 12px; }
+    .ftr-set { grid-column: 1 / -1; text-align: left; padding-top: 16px;
+      border-top: 1px solid var(--ink-12); }
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel">
+
+
+
+const { useState, useEffect, useRef } = React;
+
+/* ── Masthead ─────────────────────────────────────── */
+const Masthead = ({ current, onNav }) => {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const items = [
+    { id: 'home',         label: 'Home',         href: 'index.html' },
+    { id: 'about',        label: 'About',        href: 'about.html' },
+    { id: 'resources', label: 'Resources', href: 'resources.html' },
+    { id: 'contact',      label: 'Contact',      href: '#contact' },
+  ];
+
+  return (
+    <header className={'mast-wrap' + (scrolled ? ' is-scrolled' : '')}>
+      <div className="mast-meta">
+        <span>Vol. III · No. 2</span>
+        <span className="mast-meta-mid">Boston &amp; Paris</span>
+        <span>Updated May 2026</span>
+      </div>
+      <div className="mast">
+        <a className="mast-mark" href="#"
+           onClick={(e) => { e.preventDefault(); onNav('home'); }}>
+          Akpeli Nordor
+        </a>
+        <nav className="mast-nav" aria-label="Primary">
+          {items.map(it => (
+            <a
+              key={it.id}
+              href={it.href}
+              className={current === it.id ? 'curr' : ''}
+              onClick={(e) => {
+                if (it.id === 'contact' || it.id === 'home') {
+                  e.preventDefault();
+                  onNav(it.id);
+                }
+              }}
+            >{it.label}</a>
+          ))}
+        </nav>
+      </div>
+    </header>
+  );
+};
+
+/* ── Hero ─────────────────────────────────────────── */
+const Hero = () => (
+  <section className="hero" data-screen-label="Hero">
+    <div className="hero-mark" aria-hidden="true">
+      <span className="mark-cross" style={{ width: 22, height: 22 }}></span>
+    </div>
+    <div className="grid">
+      <div className="grid-meta">
+        <div className="sec-num">§ 01.i</div>
+        <div className="sec-label">Hero</div>
+      </div>
+      <div className="grid-content">
+        <div className="hero-eyebrow">
+          <span>Pharmacist</span>
+          <span className="dot">•</span>
+          <span>Scientist</span>
+          <span className="dot">•</span>
+          <span>Founder</span>
+          <span className="dot">•</span>
+          <span>Boston &amp; Paris</span>
+        </div>
+        <h1 className="hero-title">
+          We're in the first months of the <span className="em">AI revolution</span>.
+        </h1>
+        <div className="hero-stack">
+          <p>
+            Think of where the internet was in 1999 — then compress each
+            decade of progress into 12 months.
+          </p>
+          <p className="last">
+            I'm here to build what comes next in health.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
+/* ── Point of View ────────────────────────────────── */
+const PointOfView = () => (
+  <section className="section section--alt" data-screen-label="Point of View">
+    <div className="grid">
+      <div className="grid-meta">
+        <div className="sec-num">§ 01.ii</div>
+        <div className="sec-label">Point of view</div>
+      </div>
+      <div className="grid-content">
+        <h2 className="pov-title">
+          Biology is too complex, variable, alive for explicit code.
+          Health systems likewise.
+        </h2>
+        <div className="pov-body">
+          <p>
+            That's why tech has failed to disrupt healthcare; not for lack of trying, but for lack of the right tools.
+          </p>
+          <p>
+            Code instructs systems. <em></em>  AI converses with them. <em></em> 
+          </p>
+          <p className="closing">
+            We now have the tools. The question is: where do we start building?
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
+/* ── Now ──────────────────────────────────────────── */
+const Now = () => (
+  <section className="section" data-screen-label="Now">
+    <div className="grid">
+      <div className="grid-meta">
+        <div className="sec-num">§ 01.iii</div>
+        <div className="sec-label">Now</div>
+      </div>
+      <div className="grid-content">
+        <div className="now-status">
+          <span className="pulse" aria-hidden="true"></span>
+          <span>CURRENTLY · BOSTON, MASSACHUSETTS </span>
+        </div>
+        <h3 className="now-title">Looking for the next problem.</h3>
+        <p className="now-body">
+          I'm now based in Boston, actively exploring the next problem worth
+          solving at the intersection of precision health and AI.
+        </p>
+      </div>
+    </div>
+  </section>
+);
+
+/* ── Connect ──────────────────────────────────────── */
+const Connect = ({ onTalk }) => (
+  <section className="section" data-screen-label="Connect">
+    <div className="grid">
+      <div className="grid-meta">
+        <div className="sec-num">§ 01.iv</div>
+        <div className="sec-label">Connect</div>
+      </div>
+      <div className="grid-content">
+        <h2 className="connect-title">
+          If precision health and AI are where you play, let's talk.
+        </h2>
+        <p className="connect-body">
+          If you're facing a hard problem in precision health, or building with AI to solve one, I'd love to hear from you.
+        </p>
+        <div className="connect-actions">
+          <a className="btn" href="#contact"
+             onClick={(e) => { e.preventDefault(); onTalk('contact'); }}>
+            <span>Let's talk</span>
+            <span className="arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
+/* ── Contact ──────────────────────────────────────── */
+const Contact = () => {
+  const [form, setForm] = useState({
+    name: '', email: '', org: '', intent: '', message: ''
+  });
+  const [errors, setErrors] = useState({});
+  const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
+
+  const set = (k) => (e) => setForm(f => ({ ...f, [k]: e.target.value }));
+
+  const validate = () => {
+    const e = {};
+    if (!form.name.trim()) e.name = 'Required.';
+    if (!form.email.trim()) e.email = 'Required.';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = 'Doesn\u2019t look like a valid address.';
+    if (!form.intent) e.intent = 'Pick one.';
+    if (!form.message.trim() || form.message.trim().length < 3) e.message = 'A short message, please.';
+    return e;
+  };
+
+  const onSubmit = async (ev) => {
+    ev.preventDefault();
+    const e = validate();
+    setErrors(e);
+    if (Object.keys(e).length > 0) return;
+
+    setSubmitting(true);
+    setSubmitError(null);
+    try {
+      const res = await fetch('https://formspree.io/f/xzdoldwr', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          org: form.org,
+          intent: form.intent,
+          message: form.message,
+          _subject: 'New contact form submission from ' + form.name,
+        }),
+      });
+      if (res.ok) {
+        setSent(true);
+      } else {
+        let data = {};
+        try { data = await res.json(); } catch (_) {}
+        const detail = (data.errors && data.errors[0] && data.errors[0].message)
+          || data.error
+          || ('HTTP ' + res.status);
+        setSubmitError('Couldn’t send your message (' + detail + '). Please try again, or email me directly.');
+      }
+    } catch (err) {
+      setSubmitError('Network error — please check your connection and try again.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  if (sent) {
+    return (
+      <section className="contact" data-screen-label="Contact">
+        <div className="grid">
+          <div className="grid-meta">
+            <div className="sec-num">§ 01.v</div>
+            <div className="sec-label">Contact</div>
+          </div>
+          <div className="grid-content">
+            <div className="form-success">
+              <h3>Received.</h3>
+              <p>
+                Thank you. I read everything that comes through here and reply personally.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section className="contact" data-screen-label="Contact">
+      <div className="grid">
+        <div className="grid-meta">
+          <div className="sec-num">§ 05</div>
+          <div className="sec-label">Contact</div>
+        </div>
+        <div className="grid-content">
+          <h1 className="contact-title">Send a note.</h1>
+          <p className="contact-lede">
+            Your message goes to my inbox. No newsletter, no list, no third
+            parties.
+          </p>
+
+          <form className="form" onSubmit={onSubmit} noValidate>
+            <div className="field-row">
+              <div className="field">
+                <label className="field-label" htmlFor="f-name">Name<span className="req">*</span></label>
+                <input id="f-name" className="input" value={form.name} onChange={set('name')} autoComplete="name" />
+                {errors.name && <div className="form-error">{errors.name}</div>}
+              </div>
+              <div className="field">
+                <label className="field-label" htmlFor="f-email">Email<span className="req">*</span></label>
+                <input id="f-email" className="input" type="email" value={form.email} onChange={set('email')} autoComplete="email" />
+                {errors.email && <div className="form-error">{errors.email}</div>}
+              </div>
+            </div>
+
+            <div className="field">
+              <label className="field-label" htmlFor="f-org">Affiliation <span style={{ textTransform: 'none', fontStyle: 'italic', letterSpacing: 0, color: 'var(--ink-rule)', fontFamily: 'var(--serif-body)' }}>— optional</span></label>
+              <input id="f-org" className="input" value={form.org} onChange={set('org')} />
+            </div>
+
+            <div className="field">
+              <label className="field-label" htmlFor="f-intent">Reason for writing<span className="req">*</span></label>
+              <select id="f-intent" className="select" value={form.intent} onChange={set('intent')}>
+                <option value="">What brings you here?</option>
+                <option value="hard-problem">I'm facing a hard problem in precision health.</option>
+                <option value="building">I'm building something in precision health × AI.</option>
+                <option value="investing">I invest in this space.</option>
+                <option value="research">Research or scientific collaboration.</option>
+                <option value="press">Press, interview, or speaking engagement.</option>
+                <option value="other">Just exploring – something else.</option>
+              </select>
+              {errors.intent && <div className="form-error">{errors.intent}</div>}
+            </div>
+
+            <div className="field">
+              <label className="field-label" htmlFor="f-msg">Message<span className="req">*</span></label>
+              <textarea id="f-msg" className="textarea" value={form.message} onChange={set('message')}
+                placeholder="What you're working on, what you'd like to discuss, and any links worth reading first."></textarea>
+              {errors.message && <div className="form-error">{errors.message}</div>}
+            </div>
+
+            {submitError && (
+              <div className="form-error" role="alert" style={{ marginBottom: 12 }}>
+                {submitError}
+              </div>
+            )}
+            <div className="form-foot">
+              <p className="form-note"></p>
+              <button type="submit" className="btn" disabled={submitting}>
+                <span>{submitting ? 'Sending…' : 'Send'}</span>
+                <span className="arrow" aria-hidden="true">&rarr;</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+/* ── Footer ───────────────────────────────────────── */
+const Footer = () => (
+  <footer className="ftr">
+    <div className="ftr-grid">
+      <div className="ftr-meta">© 2026 Akpeli Nordor &nbsp;·&nbsp; All rights reserved</div>
+      <div className="ftr-social" aria-label="Social">
+        <a href="https://www.linkedin.com/in/akpelinordor" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5V9h3v10zM6.5 7.7a1.74 1.74 0 1 1 0-3.48 1.74 1.74 0 0 1 0 3.48zM19 19h-3v-5.3c0-1.26-.02-2.88-1.75-2.88-1.76 0-2.03 1.37-2.03 2.79V19h-3V9h2.88v1.36h.04A3.16 3.16 0 0 1 15 8.75c3.04 0 3.6 2 3.6 4.59V19z"/></svg></a>
+        <a href="https://x.com/akpelin" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M18.244 2H21l-6.52 7.45L22 22h-6.063l-4.75-6.213L5.74 22H3l6.97-7.97L2 2h6.21l4.293 5.676L18.244 2zm-1.062 18h1.682L7.91 4H6.105l11.077 16z"/></svg></a>
+        <a href="https://github.com/akpelinordor" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.63 22.42c.57.11.78-.25.78-.55v-2.1c-3.2.7-3.87-1.36-3.87-1.36-.52-1.34-1.28-1.7-1.28-1.7-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.78 2.71 1.27 3.37.97.1-.76.4-1.27.74-1.56-2.55-.3-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.3-.52-1.47.11-3.07 0 0 .97-.31 3.19 1.18a11 11 0 0 1 5.81 0c2.21-1.49 3.18-1.18 3.18-1.18.64 1.6.24 2.77.12 3.07.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.69.41.36.78 1.07.78 2.16v3.2c0 .31.21.67.79.55A11.5 11.5 0 0 0 12 .5z"/></svg></a>
+        <a href="https://www.instagram.com/akpelinor/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://bsky.app/profile/akpeli.bsky.social" target="_blank" rel="noopener" aria-label="Bluesky"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M6.34 4.5c2.55 1.92 5.29 5.8 6.29 7.88.99-2.08 3.74-5.96 6.29-7.88 1.84-1.39 4.83-2.46 4.83.96 0 .68-.39 5.71-.62 6.53-.8 2.84-3.7 3.57-6.29 3.13 4.52.77 5.67 3.31 3.18 5.85-4.71 4.84-6.78-1.21-7.31-2.76-.1-.28-.14-.41-.14-.3 0-.11-.05.02-.14.3-.53 1.55-2.6 7.6-7.31 2.76-2.49-2.54-1.34-5.08 3.18-5.85-2.59.44-5.49-.29-6.29-3.13C1.78 11.17 1.39 6.14 1.39 5.46c0-3.42 2.99-2.35 4.83-.96H6.34z"/></svg></a>
+      </div>
+      <div className="ftr-set">
+        Designed &amp; built with Claude AI
+      </div>
+    </div>
+  </footer>
+);
+
+/* ── Reveal-on-scroll wrapper ─────────────────────── */
+const Reveal = ({ children, delay = 0 }) => {
+  const ref = useRef(null);
+  const [seen, setSeen] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { setSeen(true); io.disconnect(); }
+    }, { threshold: 0.08 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return (
+    <div ref={ref}
+         className={'reveal' + (seen ? ' is-in' : '')}
+         style={{ transitionDelay: delay + 'ms' }}>
+      {children}
+    </div>
+  );
+};
+
+/* ── App ──────────────────────────────────────────── */
+const App = () => {
+  const [current, setCurrent] = useState(() => {
+    if (typeof window !== 'undefined' && window.location.hash === '#contact') return 'contact';
+    return 'home';
+  });
+
+  const onNav = (id) => {
+    setCurrent(id);
+    // Real navigation: About/Resources are separate HTML files; this in-page state is only used by Home and Contact.
+    if (typeof window !== 'undefined') {
+      if (id === 'contact') {
+        window.history.replaceState(null, '', '#contact');
+      } else if (id === 'home') {
+        window.history.replaceState(null, '', window.location.pathname);
+      }
+    }
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+
+  return (
+    <div className="page" data-screen-label={current === 'contact' ? 'Contact' : current === 'about' ? 'About' : current === 'resources' ? 'Resources' : 'Home'}>
+      <Masthead current={current} onNav={onNav} />
+      <main>
+        {current === 'home' && (
+          <React.Fragment>
+            <Reveal><Hero /></Reveal>
+            <Reveal><PointOfView /></Reveal>
+            <Reveal><Now /></Reveal>
+            <Reveal><Connect onTalk={onNav} /></Reveal>
+          </React.Fragment>
+        )}
+        {current === 'contact' && <Reveal><Contact /></Reveal>}
+      </main>
+      <Footer />
+    </div>
+  );
+};
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+
+
+
+</script>
+</body>
+</html>

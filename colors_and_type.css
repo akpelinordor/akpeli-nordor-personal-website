@@ -1,0 +1,219 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   Akpeli Nordor — Design Tokens
+   Forest. Cream. Navy. Mustard. No gradients. No dark mode. No noise.
+   ──────────────────────────────────────────────────────────────────────── */
+
+/* Webfonts via Google Fonts (substitutes for licensed targets — see README) */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap');
+
+/* Phosphor Icons (Regular, 1.25px stroke) */
+@import url('https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css');
+
+:root {
+  /* ── Color: brand ──────────────────────────────────── */
+  --forest: #1B3A2D;          /* dominant — headings, primary, masthead */
+  --forest-deep: #142A21;     /* hover/press for primary */
+  --forest-soft: #2A4F3F;     /* secondary forest, hairlines on light */
+
+  --navy: #15243B;            /* secondary accent */
+  --navy-deep: #0E1A2C;
+  --navy-soft: #2C3E5C;
+
+  --mustard: #B8861B;         /* dusty ochre — highlight, used sparingly */
+  --mustard-deep: #8E6712;
+
+  /* ── Color: surfaces ───────────────────────────────── */
+  --cream: #F5F2EC;           /* default canvas */
+  --cream-cool: #EFEAE0;      /* alternate section */
+  --paper: #FFFFFF;           /* lifted surfaces (cards, figure plates) */
+
+  /* ── Color: ink scale (forest-toned, never pure black) ── */
+  --ink: #14241B;             /* body type */
+  --ink-muted: #3D5246;       /* secondary type */
+  --ink-rule: #6E7E73;        /* meta type, mono labels */
+
+  /* alpha rules — for hairlines */
+  --ink-12: rgba(20, 36, 27, 0.12);
+  --ink-24: rgba(20, 36, 27, 0.24);
+  --ink-48: rgba(20, 36, 27, 0.48);
+
+  /* ── Type: families ────────────────────────────────── */
+  --serif-display: 'Cormorant Garamond', 'Source Serif 4', 'GT Sectra', 'Tiempos Headline', Georgia, serif;
+  --serif-body:    'Newsreader', 'Source Serif 4', 'Tiempos Text', Georgia, serif;
+  --sans:          'Inter Tight', 'Söhne', 'GT America', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+  --mono:          'JetBrains Mono', 'GT America Mono', 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+
+  /* ── Type: scale ───────────────────────────────────── */
+  --t-display-xl: 96px;       /* essay opener */
+  --t-display-l:  72px;       /* hero */
+  --t-display-m:  56px;       /* section opener */
+  --t-display-s:  40px;       /* h2 */
+  --t-h3:         28px;
+  --t-h4:         22px;
+  --t-body-l:     20px;       /* lede */
+  --t-body:       18px;       /* default body */
+  --t-body-s:     17px;       /* min reading size */
+  --t-meta:       14px;       /* mono labels, tags, footer */
+  --t-micro:      12px;       /* footnotes, captions */
+
+  /* ── Type: leading ─────────────────────────────────── */
+  --lh-display: 1.05;
+  --lh-heading: 1.15;
+  --lh-body:    1.6;
+  --lh-tight:   1.25;
+  --lh-meta:    1.4;
+
+  /* ── Type: tracking ────────────────────────────────── */
+  --tr-display: -0.02em;
+  --tr-tight:   -0.01em;
+  --tr-normal:  0;
+  --tr-meta:    0.02em;
+  --tr-caps:    0.08em;       /* for rare ALL CAPS labels */
+
+  /* ── Spacing (8pt) ─────────────────────────────────── */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+  --space-32: 128px;
+  --space-48: 192px;
+
+  /* ── Layout ────────────────────────────────────────── */
+  --gutter:        80px;
+  --gutter-wide:   120px;
+  --max-width:     1440px;
+  --measure-prose: 68ch;
+  --measure-tight: 56ch;
+  --masthead-h:    56px;
+
+  /* ── Radii (almost everything is square) ───────────── */
+  --r-0:   0;
+  --r-sm:  6px;               /* tags, pills only */
+
+  /* ── Borders ───────────────────────────────────────── */
+  --border-hair:   1px solid var(--ink-12);
+  --border-rule:   1px solid var(--ink-24);
+  --border-strong: 1px solid var(--ink);
+  --border-figure: 1.5px solid var(--ink);
+
+  /* ── Motion ────────────────────────────────────────── */
+  --ease:    cubic-bezier(0.2, 0.6, 0.2, 1);
+  --dur-1:   150ms;
+  --dur-2:   200ms;
+  --dur-3:   240ms;
+}
+
+/* ─────────────────────────────────────────────────────
+   Semantic element styles — these are the fallbacks
+   that any embedded artifact in this brand should pick up.
+   ──────────────────────────────────────────────────── */
+
+html, body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--serif-body);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--serif-display);
+  color: var(--forest);
+  font-weight: 500;
+  letter-spacing: var(--tr-display);
+  line-height: var(--lh-heading);
+  margin: 0;
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--t-display-l); line-height: var(--lh-display); }
+h2 { font-size: var(--t-display-m); }
+h3 { font-size: var(--t-h3); letter-spacing: var(--tr-tight); }
+h4 { font-size: var(--t-h4); letter-spacing: var(--tr-tight); }
+
+p {
+  font-family: var(--serif-body);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  color: var(--ink);
+  max-width: var(--measure-prose);
+  margin: 0 0 var(--space-4);
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--forest);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+  transition: color var(--dur-2) var(--ease), text-decoration-color var(--dur-2) var(--ease);
+}
+a:hover {
+  color: var(--mustard-deep);
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--mustard);
+}
+
+small, .meta {
+  font-family: var(--mono);
+  font-size: var(--t-meta);
+  letter-spacing: var(--tr-meta);
+  color: var(--ink-rule);
+  line-height: var(--lh-meta);
+}
+
+code, kbd, pre {
+  font-family: var(--mono);
+  font-size: 0.9em;
+}
+
+hr {
+  border: 0;
+  border-top: var(--border-hair);
+  margin: var(--space-12) 0;
+}
+
+::selection {
+  background: var(--mustard);
+  color: var(--forest);
+}
+
+/* ─── Utility classes used across cards & UI kits ───── */
+.lede {
+  font-family: var(--serif-body);
+  font-size: var(--t-body-l);
+  line-height: 1.5;
+  color: var(--ink);
+  font-weight: 400;
+  max-width: var(--measure-prose);
+}
+
+.eyebrow {
+  font-family: var(--mono);
+  font-size: var(--t-meta);
+  text-transform: uppercase;
+  letter-spacing: var(--tr-caps);
+  color: var(--ink-rule);
+}
+
+.tag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: var(--tr-meta);
+  color: var(--navy);
+  background: transparent;
+  border: 1px solid var(--ink-24);
+  padding: 3px 8px;
+  border-radius: var(--r-sm);
+}
+
+.rule { border-top: var(--border-hair); }
+.rule-strong { border-top: var(--border-strong); }

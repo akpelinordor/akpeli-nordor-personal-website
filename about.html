@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About — Akpeli Nordor</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<link rel="icon" href="assets/monogram.svg">
+<style>
+  /* ── Page scaffolding ─────────────────────────────── */
+  html, body { margin: 0; }
+  body { background: var(--cream); color: var(--ink); font-family: var(--serif-body); }
+  .page { max-width: var(--max-width); margin: 0 auto; }
+  main { padding: 0 var(--gutter); }
+
+  /* ── Masthead (shared with Home) ──────────────────── */
+  .mast-wrap { position: sticky; top: 0; z-index: 10; background: var(--cream);
+    transition: border-color var(--dur-2) var(--ease); }
+  .mast-meta { display: flex; justify-content: space-between; padding: 8px var(--gutter);
+    font-family: var(--mono); font-size: 11px; color: var(--ink-rule);
+    letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid var(--ink-12); }
+  .mast-meta .mast-meta-mid { letter-spacing: 0.12em; }
+  .mast { height: var(--masthead-h); display: flex; align-items: center; gap: 32px;
+    padding: 0 var(--gutter); border-bottom: 1px solid var(--ink-12); }
+  .mast-mark { font-family: var(--serif-display); font-size: 26px; font-weight: 600;
+    color: var(--forest); letter-spacing: -0.025em; text-decoration: none; line-height: 1; }
+  .mast-mark:hover { color: var(--forest-deep); }
+  .mast-nav { display: flex; gap: 32px; margin-left: auto; align-items: center; }
+  .mast-nav a { font-family: var(--sans); font-size: 14px; color: var(--ink-muted);
+    text-decoration: none; padding: 18px 0; position: relative;
+    transition: color var(--dur-2) var(--ease); letter-spacing: 0.005em; }
+  .mast-nav a:hover { color: var(--forest); }
+  .mast-nav a.curr { color: var(--forest); }
+  .mast-nav a.curr::after { content: ""; position: absolute; left: 0; right: 0; bottom: 14px;
+    height: 1.5px; background: var(--forest); }
+
+  /* ── About layout ─────────────────────────────────── */
+  .about { padding: 96px 0 64px; }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 64px;
+  }
+  .about-meta { padding-top: 6px; }
+  .sec-num {
+    font-family: var(--serif-display);
+    font-size: 14px;
+    font-style: italic;
+    color: var(--mustard-deep);
+    margin-bottom: 10px;
+  }
+  .sec-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-rule);
+  }
+
+  /* Two-column body: prose + portrait (portrait on the right) */
+  .about-body {
+    display: grid;
+    grid-template-columns: 1fr minmax(280px, 380px);
+    gap: 72px;
+    align-items: start;
+  }
+
+  /* ── Portrait plate ───────────────────────────────── */
+  .portrait {
+    position: sticky;
+    top: 96px;
+  }
+  .portrait-frame {
+    border: 1.5px solid var(--ink);
+    background: var(--paper);
+    padding: 0;
+    margin: 0;
+  }
+  .portrait-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-bottom: 1.5px solid var(--ink);
+    /* Subtle film grain via overlay */
+  }
+  .portrait-cap {
+    padding: 12px 16px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-rule);
+  }
+  .portrait-cap em {
+    font-family: var(--serif-body);
+    font-style: italic;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--ink-muted);
+    font-size: 12px;
+  }
+  .portrait-meta {
+    margin-top: 18px;
+    display: grid;
+    gap: 4px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-rule);
+  }
+  .portrait-meta .row { display: grid; grid-template-columns: 90px 1fr; gap: 12px; }
+  .portrait-meta .k { color: var(--ink-rule); }
+  .portrait-meta .v { color: var(--ink); letter-spacing: 0.06em; }
+
+  /* ── Bio prose ────────────────────────────────────── */
+  .bio-name {
+    font-family: var(--serif-display);
+    font-size: 64px;
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+    color: var(--forest);
+    font-weight: 500;
+    margin: 0 0 8px;
+    text-wrap: balance;
+  }
+  .bio-name .accent { font-style: italic; }
+  .bio-role {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-rule);
+    margin: 0 0 36px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--ink-12);
+    display: flex; gap: 12px; align-items: center;
+    flex-wrap: wrap;
+  }
+  .bio-role .dot { opacity: 0.4; }
+
+  .bio-lede {
+    font-family: var(--serif-body);
+    font-size: 22px;
+    line-height: 1.45;
+    color: var(--forest);
+    font-style: italic;
+    font-weight: 400;
+    margin: 0 0 36px;
+    max-width: 38ch;
+    text-wrap: pretty;
+  }
+  .bio-body p {
+    font-family: var(--serif-body);
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--ink);
+    margin: 0 0 24px;
+    max-width: 60ch;
+  }
+  .bio-body p:last-child { margin-bottom: 0; }
+  .bio-body em { font-style: italic; color: var(--forest); }
+  .bio-body .marker {
+    font-family: var(--serif-display);
+    font-style: italic;
+    color: var(--mustard-deep);
+    font-weight: 500;
+  }
+
+  /* Drop-cap for first paragraph (subtle) */
+  .bio-body p.first::first-letter {
+    font-family: var(--serif-display);
+    font-size: 64px;
+    line-height: 0.85;
+    float: left;
+    color: var(--forest);
+    padding: 8px 10px 0 0;
+    font-weight: 500;
+  }
+
+  /* ── CV download row ──────────────────────────────── */
+  .cv-row {
+    margin-top: 56px;
+    padding-top: 22px;
+    border-top: 1px solid var(--ink-12);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+    max-width: 60ch;
+  }
+  .cv-link {
+    font-family: var(--sans);
+    font-size: 14px;
+    color: var(--forest);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--ink-24);
+    padding: 4px 0;
+    transition: color var(--dur-2) var(--ease),
+                border-color var(--dur-2) var(--ease);
+  }
+  .cv-link:hover { color: var(--mustard-deep); border-bottom-color: var(--mustard); }
+  .cv-link .arrow { transition: transform var(--dur-2) var(--ease); }
+  .cv-link:hover .arrow { transform: translateX(3px); }
+  .cv-meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-rule);
+  }
+
+  /* ── Footer (shared) ──────────────────────────────── */
+  .ftr {
+    margin-top: 96px;
+    padding: 48px var(--gutter) 32px;
+    border-top: 1px solid var(--ink);
+  }
+  .ftr-grid { display: grid; grid-template-columns: 1fr auto auto; gap: 32px; align-items: center; }
+  .ftr-mono {
+    width: 56px; height: 56px; border: 1px solid var(--forest);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif-display); font-size: 26px; font-weight: 600;
+    color: var(--forest); letter-spacing: -0.03em;
+  }
+  .ftr-meta { font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-rule); line-height: 1.6; }
+  .ftr-meta strong { display: block; font-weight: 400;
+    color: var(--ink); letter-spacing: 0.06em; margin-bottom: 3px; }
+
+  .ftr-social {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+  }
+  .ftr-social a,
+  .ftr-social .soon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    color: var(--forest);
+    text-decoration: none;
+    border: none;
+    transition: color var(--dur-2) var(--ease), transform var(--dur-2) var(--ease);
+  }
+  .ftr-social a:hover {
+    color: var(--mustard-deep);
+    transform: translateY(-1px);
+  }
+  .ftr-social .soon {
+    color: var(--ink-24);
+    cursor: not-allowed;
+  }
+  .ftr-set { font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.08em; color: var(--ink-rule);
+    text-transform: uppercase; text-align: right; }
+
+  /* Reveal on scroll */
+  .reveal { opacity: 0; transform: translateY(8px);
+    transition: opacity var(--dur-3) var(--ease), transform var(--dur-3) var(--ease); }
+  .reveal.is-in { opacity: 1; transform: translateY(0); }
+
+  /* ── Responsive ───────────────────────────────────── */
+  @media (max-width: 1180px) {
+    .about-body { grid-template-columns: 1fr; gap: 48px; }
+    .portrait { position: static; max-width: 380px; }
+  }
+  @media (max-width: 880px) {
+    main { padding: 0 32px; }
+    .mast, .mast-meta { padding-left: 32px; padding-right: 32px; }
+    .ftr { padding-left: 32px; padding-right: 32px; }
+    .about { padding: 56px 0 48px; }
+    .about-grid { grid-template-columns: 1fr; gap: 28px; }
+    .about-body { grid-template-columns: 1fr; gap: 40px; }
+    .portrait { position: static; max-width: 380px; }
+    .bio-name { font-size: 44px; }
+    .bio-lede { font-size: 19px; }
+    .mast-meta { display: none; }
+    .mast-nav { gap: 22px; }
+    .ftr-grid { grid-template-columns: 1fr; } .ftr-social { grid-column: 1 / -1; padding-top: 12px; }
+    .ftr-set { grid-column: 1 / -1; text-align: left; padding-top: 16px;
+      border-top: 1px solid var(--ink-12); }
+    .bio-body p.first::first-letter { font-size: 52px; }
+  }
+</style>
+</head>
+<body data-screen-label="About">
+  <div class="page">
+
+    <!-- Masthead -->
+    <header class="mast-wrap">
+      <div class="mast-meta">
+        <span>Vol. III · No. 2</span>
+        <span class="mast-meta-mid">Boston &amp; Paris</span>
+        <span>Updated May 2026</span>
+      </div>
+      <div class="mast">
+        <a class="mast-mark" href="index.html">Akpeli Nordor</a>
+        <nav class="mast-nav" aria-label="Primary">
+          <a href="index.html">Home</a>
+          <a href="about.html" class="curr">About</a>
+          <a href="resources.html">Resources</a>
+          <a href="index.html#contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="about reveal" id="about-section">
+        <div class="about-grid">
+          <!-- Left meta rail -->
+          <div class="about-meta">
+            <div class="sec-num">§ 02</div>
+            <div class="sec-label">About</div>
+          </div>
+
+          <!-- Right content: bio + portrait -->
+          <div class="about-body">
+            <!-- Bio prose -->
+            <div class="bio">
+              <h1 class="bio-name">
+                Akpeli <span class="accent">Nordor</span>.
+              </h1>
+              <div class="bio-role">
+                <span>PharmD-PhD</span>
+                <span class="dot">•</span>
+                <span>Cancer Scientist</span>
+                <span class="dot">•</span>
+                <span>Techbio Founder</span>
+                <span class="dot">•</span>
+                <span>Boston &amp; Paris</span>
+              </div>
+
+              <p class="bio-lede">
+                A scientist and founder building at the intersection of
+                precision health and AI.
+              </p>
+
+              <div class="bio-body">
+                <p>
+                  In 2019, he co-founded <a href="https://epigenelabs.com" target="_blank" rel="noopener"><em>Epigene Labs</em></a>, a techbio company
+                  pioneering AI-powered data curation for precision oncology R&amp;D.
+                  He built its core scientific team in France before relocating to
+                  Boston to develop the company's business in its primary market.
+                  Over seven years, Epigene Labs contributed to over 15
+                  R&amp;D programs, fueled more than 1,000 scientific
+                  explorations in the fight against cancer, and raised over
+                  €10M across venture and grant financing.
+                </p>
+                <p>
+                  Prior to Epigene, Akpeli conducted research in cancer biology at
+                  <a href="https://institut-curie.org/" target="_blank" rel="noopener"><em>Institut Curie</em></a> in Paris and in computational biology at
+                  <a href="https://www.massgeneral.org/" target="_blank" rel="noopener"><em>Massachusetts General Hospital</em></a> in Boston — learning how
+                  disease works at the molecular level before deciding to change
+                  how it's fought at the systems level.
+                </p>
+                <p>He holds a dual PharmD–PhD from <a href="https://u-paris.fr/language/en/" target="_blank" rel="noopener"><em>Université Paris Cité</em></a> and completed postdoctoral training at <a href="https://hms.harvard.edu/research" target="_blank" rel="noopener"><em>Harvard Medical School</em></a>.</p>
+                <p>Alongside his research, he significantly contributed to the founding of <a href="https://hello-tomorrow.org/" target="_blank" rel="noopener"><em>Hello Tomorrow</em></a>, a Paris-based non-profit promoting deeptech entrepreneurship worldwide.</p>
+                <p>
+                  Akpeli is now based in Boston, actively exploring what comes next
+                  at the edge of precision health and AI.
+                </p>
+              </div>
+
+              <div class="cv-row">
+                <a class="cv-link" href="assets/akpeli-nordor-cv.pdf" download>
+                  <span>Download CV</span>
+                  <span class="arrow" aria-hidden="true">→</span>
+                </a>
+                <span class="cv-meta">PDF · Updated May 2026</span>
+              </div>
+            </div>
+
+            <!-- Portrait plate (right column) -->
+            <aside class="portrait">
+              <figure class="portrait-frame">
+                <img class="portrait-img"
+                     src="assets/portrait-akpeli.jpg"
+                     alt="Portrait of Akpeli Nordor"
+                     loading="eager">
+                <figcaption class="portrait-cap">
+                  <span>Plate i</span>
+                  <em>The author, 2025.</em>
+                </figcaption>
+              </figure>
+              <div class="portrait-meta">
+                <div class="row"><span class="k">Born</span><span class="v">Paris, France</span></div>
+                <div class="row"><span class="k">Based</span><span class="v">Boston, MA, United States</span></div>
+                <div class="row"><span class="k">Field</span><span class="v">Biomedical Sciences · AI Technologies</span></div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="ftr">
+      <div class="ftr-grid">
+        <div class="ftr-meta">© 2026 Akpeli Nordor &nbsp;·&nbsp; All rights reserved</div>
+        <div class="ftr-social" aria-label="Social">
+          <a href="https://www.linkedin.com/in/akpelinordor" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5V9h3v10zM6.5 7.7a1.74 1.74 0 1 1 0-3.48 1.74 1.74 0 0 1 0 3.48zM19 19h-3v-5.3c0-1.26-.02-2.88-1.75-2.88-1.76 0-2.03 1.37-2.03 2.79V19h-3V9h2.88v1.36h.04A3.16 3.16 0 0 1 15 8.75c3.04 0 3.6 2 3.6 4.59V19z"/></svg></a>
+        <a href="https://x.com/akpelin" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M18.244 2H21l-6.52 7.45L22 22h-6.063l-4.75-6.213L5.74 22H3l6.97-7.97L2 2h6.21l4.293 5.676L18.244 2zm-1.062 18h1.682L7.91 4H6.105l11.077 16z"/></svg></a>
+        <a href="https://github.com/akpelinordor" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.63 22.42c.57.11.78-.25.78-.55v-2.1c-3.2.7-3.87-1.36-3.87-1.36-.52-1.34-1.28-1.7-1.28-1.7-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.78 2.71 1.27 3.37.97.1-.76.4-1.27.74-1.56-2.55-.3-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.3-.52-1.47.11-3.07 0 0 .97-.31 3.19 1.18a11 11 0 0 1 5.81 0c2.21-1.49 3.18-1.18 3.18-1.18.64 1.6.24 2.77.12 3.07.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.69.41.36.78 1.07.78 2.16v3.2c0 .31.21.67.79.55A11.5 11.5 0 0 0 12 .5z"/></svg></a>
+        <a href="https://www.instagram.com/akpelinor/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://bsky.app/profile/akpeli.bsky.social" target="_blank" rel="noopener" aria-label="Bluesky"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M6.34 4.5c2.55 1.92 5.29 5.8 6.29 7.88.99-2.08 3.74-5.96 6.29-7.88 1.84-1.39 4.83-2.46 4.83.96 0 .68-.39 5.71-.62 6.53-.8 2.84-3.7 3.57-6.29 3.13 4.52.77 5.67 3.31 3.18 5.85-4.71 4.84-6.78-1.21-7.31-2.76-.1-.28-.14-.41-.14-.3 0-.11-.05.02-.14.3-.53 1.55-2.6 7.6-7.31 2.76-2.49-2.54-1.34-5.08 3.18-5.85-2.59.44-5.49-.29-6.29-3.13C1.78 11.17 1.39 6.14 1.39 5.46c0-3.42 2.99-2.35 4.83-.96H6.34z"/></svg></a>
+        </div>
+        <div class="ftr-set">
+        Designed &amp; built with Claude AI
+      </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.05 });
+    reveals.forEach(el => io.observe(el));
+
+    // Sticky border darken on scroll
+    const mast = document.querySelector('.mast-wrap');
+    window.addEventListener('scroll', () => {
+      mast.classList.toggle('is-scrolled', window.scrollY > 8);
+    }, { passive: true });
+  </script>
+</body>
+</html>

@@ -1,0 +1,792 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resources — Akpeli Nordor</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<link rel="icon" href="assets/monogram.svg">
+<style>
+  /* ── Page scaffolding ─────────────────────────────── */
+  html, body { margin: 0; }
+  body { background: var(--cream); color: var(--ink); font-family: var(--serif-body); }
+  .page { max-width: var(--max-width); margin: 0 auto; }
+  main { padding: 0 var(--gutter); }
+
+  /* ── Masthead (shared) ────────────────────────────── */
+  .mast-wrap { position: sticky; top: 0; z-index: 10; background: var(--cream); }
+  .mast-meta { display: flex; justify-content: space-between; padding: 8px var(--gutter);
+    font-family: var(--mono); font-size: 11px; color: var(--ink-rule);
+    letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid var(--ink-12); }
+  .mast-meta .mast-meta-mid { letter-spacing: 0.12em; }
+  .mast { height: var(--masthead-h); display: flex; align-items: center; gap: 32px;
+    padding: 0 var(--gutter); border-bottom: 1px solid var(--ink-12); }
+  .mast-mark { font-family: var(--serif-display); font-size: 26px; font-weight: 600;
+    color: var(--forest); letter-spacing: -0.025em; text-decoration: none; line-height: 1; }
+  .mast-mark:hover { color: var(--forest-deep); }
+  .mast-nav { display: flex; gap: 32px; margin-left: auto; align-items: center; }
+  .mast-nav a { font-family: var(--sans); font-size: 14px; color: var(--ink-muted);
+    text-decoration: none; padding: 18px 0; position: relative;
+    transition: color var(--dur-2) var(--ease); letter-spacing: 0.005em; }
+  .mast-nav a:hover { color: var(--forest); }
+  .mast-nav a.curr { color: var(--forest); }
+  .mast-nav a.curr::after { content: ""; position: absolute; left: 0; right: 0; bottom: 14px;
+    height: 1.5px; background: var(--forest); }
+
+  /* ── Page head ────────────────────────────────────── */
+  .page-head {
+    padding: 96px 0 56px;
+  }
+  .page-head .grid {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 64px;
+  }
+  .sec-num {
+    font-family: var(--serif-display);
+    font-size: 14px;
+    font-style: italic;
+    color: var(--mustard-deep);
+    margin-bottom: 10px;
+  }
+  .sec-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-rule);
+  }
+  .page-title {
+    font-family: var(--serif-display);
+    font-size: 80px;
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    color: var(--forest);
+    font-weight: 500;
+    margin: 0 0 18px;
+    text-wrap: balance;
+  }
+  .page-lede {
+    font-family: var(--serif-body);
+    font-size: 21px;
+    line-height: 1.5;
+    color: var(--ink);
+    margin: 0;
+    max-width: 56ch;
+    font-style: italic;
+  }
+
+  /* ── Section index (jump nav) ─────────────────────── */
+  .section-index {
+    display: flex;
+    gap: 32px;
+    align-items: baseline;
+    margin-top: 36px;
+    padding-top: 22px;
+    border-top: 1px solid var(--ink-12);
+    flex-wrap: wrap;
+  }
+  .section-index a {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-rule);
+    text-decoration: none;
+    border-bottom: 1px solid var(--ink-24);
+    padding-bottom: 3px;
+    transition: color var(--dur-2) var(--ease),
+                border-color var(--dur-2) var(--ease);
+  }
+  .section-index a:hover {
+    color: var(--forest);
+    border-bottom-color: var(--forest);
+  }
+  .section-index .count {
+    color: var(--mustard-deep);
+    font-style: italic;
+    font-family: var(--serif-body);
+    text-transform: none;
+    letter-spacing: 0;
+    margin-left: 6px;
+  }
+
+  /* ── Top-level section banner ─────────────────────── */
+  .resource-section {
+    padding-top: 80px;
+    padding-bottom: 16px;
+    border-top: 1.5px solid var(--ink);
+    margin-top: 48px;
+  }
+  .resource-section:first-of-type { margin-top: 24px; }
+  .resource-section-head {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 64px;
+    margin-bottom: 32px;
+  }
+  .resource-section-num {
+    font-family: var(--serif-display);
+    font-size: 14px;
+    font-style: italic;
+    color: var(--mustard-deep);
+  }
+  .resource-section-title {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--forest);
+    font-weight: 500;
+    margin: 0;
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+  }
+  .resource-section-title .total {
+    font-family: var(--serif-display);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink-rule);
+    letter-spacing: 0;
+    text-transform: none;
+    font-weight: 400;
+  }
+
+  /* ── Year groups ──────────────────────────────────── */
+  .year-group {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 64px;
+    align-items: start;
+    padding: 28px 0;
+    border-top: 1px solid var(--ink-12);
+  }
+  .year-group:last-child { border-bottom: 1px solid var(--ink-12); }
+  .year-meta {
+    position: sticky;
+    top: 96px;
+  }
+  .year-num {
+    font-family: var(--serif-display);
+    font-size: 56px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--forest);
+    font-weight: 500;
+    margin: 0;
+  }
+  .year-count {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-rule);
+    margin-top: 10px;
+  }
+
+  /* ── Entry list ───────────────────────────────────── */
+  .entries { display: grid; gap: 0; }
+  .entry {
+    padding: 22px 0;
+    border-top: 1px solid var(--ink-12);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: baseline;
+  }
+  .entry:first-child { border-top: none; padding-top: 4px; }
+  .entry-main { min-width: 0; }
+  .entry-title {
+    font-family: var(--serif-display);
+    font-size: 22px;
+    line-height: 1.25;
+    letter-spacing: -0.012em;
+    color: var(--ink);
+    font-weight: 500;
+    margin: 0 0 8px;
+    text-wrap: pretty;
+  }
+  .entry-title a {
+    color: var(--forest);
+    text-decoration: none;
+    background-image: linear-gradient(to right, var(--mustard), var(--mustard));
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 1.5px;
+    padding-bottom: 2px;
+    transition: color var(--dur-2) var(--ease),
+                background-size var(--dur-3) var(--ease);
+  }
+  .entry-title a:hover {
+    color: var(--mustard-deep);
+    background-size: 100% 1.5px;
+  }
+  .entry-authors {
+    font-family: var(--serif-body);
+    font-size: 14px;
+    line-height: 1.45;
+    color: var(--ink-muted);
+    font-style: italic;
+    margin: 0 0 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .entry-meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-rule);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .entry-meta .outlet {
+    color: var(--ink);
+    letter-spacing: 0.08em;
+  }
+  .entry-meta .lang {
+    font-family: var(--serif-body);
+    text-transform: none;
+    letter-spacing: 0;
+    font-style: italic;
+    color: var(--ink-rule);
+    font-size: 12px;
+  }
+  .entry-meta .dot { opacity: 0.4; }
+  .entry-arrow {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink-24);
+    align-self: start;
+    padding-top: 6px;
+    transition: color var(--dur-2) var(--ease), transform var(--dur-2) var(--ease);
+  }
+  .entry:hover .entry-arrow {
+    color: var(--forest);
+    transform: translate(2px, -2px);
+  }
+
+  /* ── Footer ───────────────────────────────────────── */
+  .ftr {
+    margin-top: 96px;
+    padding: 48px var(--gutter) 32px;
+    border-top: 1px solid var(--ink);
+  }
+  .ftr-grid { display: grid; grid-template-columns: 1fr auto auto; gap: 32px; align-items: center; }
+  .ftr-mono {
+    width: 56px; height: 56px; border: 1px solid var(--forest);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif-display); font-size: 26px; font-weight: 600;
+    color: var(--forest); letter-spacing: -0.03em;
+  }
+  .ftr-meta { font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-rule); line-height: 1.6; }
+  .ftr-meta strong { display: block; font-weight: 400;
+    color: var(--ink); letter-spacing: 0.06em; margin-bottom: 3px; }
+
+  .ftr-social {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+  }
+  .ftr-social a,
+  .ftr-social .soon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    color: var(--forest);
+    text-decoration: none;
+    border: none;
+    transition: color var(--dur-2) var(--ease), transform var(--dur-2) var(--ease);
+  }
+  .ftr-social a:hover {
+    color: var(--mustard-deep);
+    transform: translateY(-1px);
+  }
+  .ftr-social .soon {
+    color: var(--ink-24);
+    cursor: not-allowed;
+  }
+  .ftr-set { font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.08em; color: var(--ink-rule);
+    text-transform: uppercase; text-align: right; }
+
+  /* Reveal */
+  .reveal { opacity: 0; transform: translateY(8px);
+    transition: opacity var(--dur-3) var(--ease), transform var(--dur-3) var(--ease); }
+  .reveal.is-in { opacity: 1; transform: translateY(0); }
+
+  /* ── Responsive ───────────────────────────────────── */
+  @media (max-width: 960px) {
+    main { padding: 0 32px; }
+    .mast, .mast-meta { padding-left: 32px; padding-right: 32px; }
+    .ftr { padding-left: 32px; padding-right: 32px; }
+    .page-head { padding: 56px 0 36px; }
+    .page-head .grid,
+    .resource-section-head,
+    .year-group { grid-template-columns: 1fr; gap: 18px; }
+    .page-title { font-size: 52px; }
+    .year-meta { position: static; }
+    .year-num { font-size: 44px; }
+    .entry { grid-template-columns: 1fr; gap: 8px; }
+    .entry-arrow { display: none; }
+    .mast-meta { display: none; }
+    .mast-nav { gap: 22px; }
+    .ftr-grid { grid-template-columns: 1fr; } .ftr-social { grid-column: 1 / -1; padding-top: 12px; }
+    .ftr-set { grid-column: 1 / -1; text-align: left; padding-top: 16px;
+      border-top: 1px solid var(--ink-12); }
+  }
+</style>
+</head>
+<body data-screen-label="Resources">
+  <div class="page">
+
+    <header class="mast-wrap">
+      <div class="mast-meta">
+        <span>Vol. III · No. 2</span>
+        <span class="mast-meta-mid">Boston &amp; Paris</span>
+        <span>Updated May 2026</span>
+      </div>
+      <div class="mast">
+        <a class="mast-mark" href="index.html">Akpeli Nordor</a>
+        <nav class="mast-nav" aria-label="Primary">
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="resources.html" class="curr">Resources</a>
+          <a href="index.html#contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+
+      <!-- Page head -->
+      <section class="page-head reveal">
+        <div class="grid">
+          <div>
+            <div class="sec-num">§ 03</div>
+            <div class="sec-label">Resources</div>
+          </div>
+          <div>
+            <h1 class="page-title">Resources.</h1>
+            <p class="page-lede">
+              Selected publications and media appearances.
+            </p>
+            <div class="section-index">
+              <a href="#publications">Publications</a>
+              <a href="#media">Media</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── Section: Publications ───────────────────── -->
+      <section id="publications" class="resource-section reveal">
+        <div class="resource-section-head">
+          <div>
+            <div class="sec-num">§ 03.i</div>
+            <div class="sec-label">Publications</div>
+          </div>
+          <div></div>
+        </div>
+
+        <!-- 2026 -->
+        <div class="year-group">
+          <div class="year-meta">
+            <h3 class="year-num">2026</h3>
+          </div>
+          <div class="entries">
+            <article class="entry">
+              <div class="entry-main">
+                <h4 class="entry-title">
+                  <a href="https://www.biorxiv.org/" target="_blank" rel="noopener">
+                    CMS4-focused multi-omic integration enhances antigen target identification in colorectal cancer
+                  </a>
+                </h4>
+                <div class="entry-authors">Eleonore Fox, Lea Meunier, Solene Weill, Guillaume Appe, Abdelkader Behdenna, Lucas Hensen, Celia Lafond, Akpeli Nordor, Camille Marijon</div>
+                <div class="entry-meta">
+                  <span class="outlet">bioRxiv</span>
+                  <span class="dot">·</span>
+                  <span class="lang">Preprint</span>
+                </div>
+              </div>
+              <span class="entry-arrow" aria-hidden="true">↗</span>
+            </article>
+          </div>
+        </div>
+
+        <!-- 2025 -->
+        <div class="year-group">
+          <div class="year-meta">
+            <h3 class="year-num">2025</h3>
+          </div>
+          <div class="entries">
+            <article class="entry">
+              <div class="entry-main">
+                <h4 class="entry-title">
+                  <a href="https://link.springer.com/article/10.1186/s12859-025-06180-7" target="_blank" rel="noopener">
+                    Differential expression analysis with inmoose, the integrated multi-omic open-source environment in Python
+                  </a>
+                </h4>
+                <div class="entry-authors">Maximilien Colange, Guillaume Appe, Lea Meunier, Solene Weil, Akpeli Nordor, Abdelkader Behdenna</div>
+                <div class="entry-meta">
+                  <span class="outlet">BMC Bioinformatics</span>
+                </div>
+              </div>
+              <span class="entry-arrow" aria-hidden="true">↗</span>
+            </article>
+            <article class="entry">
+              <div class="entry-main">
+                <h4 class="entry-title">
+                  <a href="https://www.nature.com/articles/s41598-025-03376-y" target="_blank" rel="noopener">
+                    Bridging the gap between R and Python in bulk transcriptomic data analysis with InMoose
+                  </a>
+                </h4>
+                <div class="entry-authors">Maximilien Colange, Guillaume Appe, Lea Meunier, Solene Weill, W. Evan Johnson, Akpeli Nordor, Abdelkader Behdenna</div>
+                <div class="entry-meta">
+                  <span class="outlet">Scientific Reports</span>
+                </div>
+              </div>
+              <span class="entry-arrow" aria-hidden="true">↗</span>
+            </article>
+          </div>
+        </div>
+
+        <!-- 2023 -->
+        <div class="year-group">
+          <div class="year-meta">
+            <h3 class="year-num">2023</h3>
+          </div>
+          <div class="entries">
+            <article class="entry">
+              <div class="entry-main">
+                <h4 class="entry-title">
+                  <a href="https://link.springer.com/article/10.1186/s12859-023-05578-5" target="_blank" rel="noopener">
+                    pyComBat, a Python tool for batch effects correction in high-throughput molecular data using empirical Bayes methods
+                  </a>
+                </h4>
+                <div class="entry-authors">Abdelkader Behdenna, Maximilien Colange, Julien Haziza, Aryo Gema, Guillaume Appe, Chloe-Agathe Azencott, Akpeli Nordor</div>
+                <div class="entry-meta">
+                  <span class="outlet">BMC Bioinformatics</span>
+                </div>
+              </div>
+              <span class="entry-arrow" aria-hidden="true">↗</span>
+            </article>
+          </div>
+        </div>
+
+        <!-- 2018 -->
+        <div class="year-group">
+          <div class="year-meta">
+            <h3 class="year-num">2018</h3>
+          </div>
+          <div class="entries">
+            <article class="entry">
+              <div class="entry-main">
+                <h4 class="entry-title">
+                  <a href="https://royalsocietypublishing.org/rsob/article/8/10/180127/91618/Cancer-malaria-hidden-connectionsCancer-Malaria" target="_blank" rel="noopener">
+                    Cancer-malaria: hidden connections
+                  </a>
+                </h4>
+                <div class="entry-authors">Akpeli Nordor, Dominique Bellet, Geoffrey Siwo</div>
+                <div class="entry-meta">
+                  <span class="outlet">Open Biology</span>
+                </div>
+              </div>
+              <span class="entry-arrow" aria-hidden="true">↗</span>
+            </article>
+            <article class="entry">
+              <div class="entry-main">
+                <h4 class="entry-title">
+                  <a href="https://www.biorxiv.org/content/10.1101/399311v1" target="_blank" rel="noopener">
+                    “Global Transcriptional Response to CRISPR/CAS9-AAV6 Based Genome Editing” Matches Transcriptional Response to Specific Small Molecule Perturbations
+                  </a>
+                </h4>
+                <div class="entry-authors">Akpeli Nordor, Martin Aryee, Geoffrey Siwo</div>
+                <div class="entry-meta">
+                  <span class="outlet">bioRxiv</span>
+                  <span class="dot">·</span>
+                  <span class="lang">Preprint</span>
+                </div>
+              </div>
+              <span class="entry-arrow" aria-hidden="true">↗</span>
+            </article>
+          </div>
+        </div>
+
+        <!-- 2017 -->
+        <div class="year-group">
+          <div class="year-meta">
+            <h3 class="year-num">2017</h3>
+          </div>
+          <div class="entries">
+            <article class="entry">
+              <div class="entry-main">
+                <h4 class="entry-title">
+                  <a href="https://www.tandfonline.com/doi/10.1080/15592294.2017.1342912" target="_blank" rel="noopener">
+                    The early pregnancy placenta foreshadows DNA methylation alterations of solid tumors
+                  </a>
+                </h4>
+                <div class="entry-authors">Akpeli Nordor, Djamel Nehar-Belaid, Sophie Richon, David Klatzmann, Dominique Bellet, Virginie Dangles-Marie, Thierry Fournier, Martin Aryee</div>
+                <div class="entry-meta">
+                  <span class="outlet">Epigenetics</span>
+                </div>
+              </div>
+              <span class="entry-arrow" aria-hidden="true">↗</span>
+            </article>
+          </div>
+        </div>
+
+        <!-- 2015 -->
+        <div class="year-group">
+          <div class="year-meta">
+            <h3 class="year-num">2015</h3>
+          </div>
+          <div class="entries">
+            <article class="entry">
+              <div class="entry-main">
+                <h4 class="entry-title">
+                  <a href="https://www.sciencedirect.com/science/article/pii/S0009898115000728" target="_blank" rel="noopener">
+                    Specific detection of type II human chorionic gonadotropin beta subunit produced by trophoblastic and neoplastic cells
+                  </a>
+                </h4>
+                <div class="entry-authors">L. Aldaz-Carroll, S. Richon, V. Dangles-Marie, M. Cocquebert, T. Fournier, F. Troalen, D. Stevens, B. Guery, A.-M. Hersant, I. Guibourdenche, A. Nordor, A. Pecking, D. Bellet</div>
+                <div class="entry-meta">
+                  <span class="outlet">Clinica Chimica Acta</span>
+                </div>
+              </div>
+              <span class="entry-arrow" aria-hidden="true">↗</span>
+            </article>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ─── Section: Media ──────────────────────────── -->
+      <section id="media" class="resource-section reveal">
+        <div class="resource-section-head">
+          <div>
+            <div class="sec-num">§ 03.ii</div>
+            <div class="sec-label">Media</div>
+          </div>
+          <div></div>
+        </div>
+
+        <!-- 2025 -->
+        <div class="year-group">
+          <div class="year-meta">
+            <h3 class="year-num">2025</h3>
+          </div>
+          <div class="entries">
+            <article class="entry">
+              <div class="entry-main">
+                <h4 class="entry-title">
+                  <a href="https://www.bfmtv.com/economie/replay-emissions/tech-and-co/video-deux-pepites-de-la-banque-des-startups-lcl-16-10_VN-202510160936.html" target="_blank" rel="noopener">
+                    Epigene Labs CEO featured on BFM Business' Tech &amp; Co to discuss how AI is reshaping every industry
+                  </a>
+                </h4>
+                <div class="entry-meta">
+                  <span class="outlet">BFM Business</span>
+                  <span class="dot">·</span>
+                  <span class="lang">in French</span>
+                </div>
+              </div>
+              <span class="entry-arrow" aria-hidden="true">↗</span>
+            </article>
+            <article class="entry">
+              <div class="entry-main">
+                <h4 class="entry-title">
+                  <a href="https://pharmaceutiques.com/evenements/table-ronde-pharmaceutiques/table-ronde-quel-impact-de-lintelligence-artificielle-sur-la-recherche-et-le-developpement/" target="_blank" rel="noopener">
+                    Roundtable: What impact does artificial intelligence have on research and development?
+                  </a>
+                </h4>
+                <div class="entry-meta">
+                  <span class="outlet">Pharmaceutiques</span>
+                  <span class="dot">·</span>
+                  <span class="lang">in French</span>
+                </div>
+              </div>
+              <span class="entry-arrow" aria-hidden="true">↗</span>
+            </article>
+            <article class="entry">
+              <div class="entry-main">
+                <h4 class="entry-title">
+                  <a href="https://www.lepoint.fr/sciences-nature/palmares-des-inventeurs-2025-notre-methodologie-et-nos-laureats-13-02-2025-2582376_1924.php" target="_blank" rel="noopener">
+                    Le Point magazine unveils its 2025 inventors' rankings – the 100 inventions that will change our lives
+                  </a>
+                </h4>
+                <div class="entry-meta">
+                  <span class="outlet">Le Point</span>
+                  <span class="dot">·</span>
+                  <span class="lang">in French</span>
+                </div>
+              </div>
+              <span class="entry-arrow" aria-hidden="true">↗</span>
+            </article>
+          </div>
+        </div>
+
+        <!-- 2024 -->
+        <div class="year-group">
+          <div class="year-meta">
+            <h3 class="year-num">2024</h3>
+          </div>
+          <div class="entries">
+            <article class="entry">
+              <div class="entry-main">
+                <h4 class="entry-title">
+                  <a href="https://sifted.eu/pro/briefings/drug-discovery-2024" target="_blank" rel="noopener">
+                    Sifted includes Epigene Labs in its 2024 investment-grade research on drug discovery
+                  </a>
+                </h4>
+                <div class="entry-meta">
+                  <span class="outlet">Sifted, backed by FT</span>
+                </div>
+              </div>
+              <span class="entry-arrow" aria-hidden="true">↗</span>
+            </article>
+          </div>
+        </div>
+
+        <!-- 2023 -->
+        <div class="year-group">
+          <div class="year-meta">
+            <h3 class="year-num">2023</h3>
+          </div>
+          <div class="entries">
+            <article class="entry">
+              <div class="entry-main">
+                <h4 class="entry-title">
+                  <a href="https://biotech-finances.com/produit/1051-04-12-2023/" target="_blank" rel="noopener">
+                    Epigene Labs: a future champion of precision oncology?
+                  </a>
+                </h4>
+                <div class="entry-meta">
+                  <span class="outlet">Biotech Finances</span>
+                  <span class="dot">·</span>
+                  <span class="lang">in French</span>
+                </div>
+              </div>
+              <span class="entry-arrow" aria-hidden="true">↗</span>
+            </article>
+          </div>
+        </div>
+
+        <!-- 2021 -->
+        <div class="year-group">
+          <div class="year-meta">
+            <h3 class="year-num">2021</h3>
+          </div>
+          <div class="entries">
+            <article class="entry">
+              <div class="entry-main">
+                <h4 class="entry-title">
+                  <a href="https://www.facebook.com/watch/?v=456739938747593" target="_blank" rel="noopener">
+                    Epigene Labs CEO interviewed by The Majors
+                  </a>
+                </h4>
+                <div class="entry-meta">
+                  <span class="outlet">The Majors</span>
+                  <span class="dot">·</span>
+                  <span class="lang">in French</span>
+                </div>
+              </div>
+              <span class="entry-arrow" aria-hidden="true">↗</span>
+            </article>
+          </div>
+        </div>
+
+        <!-- 2019 -->
+        <div class="year-group">
+          <div class="year-meta">
+            <h3 class="year-num">2019</h3>
+          </div>
+          <div class="entries">
+            <article class="entry">
+              <div class="entry-main">
+                <h4 class="entry-title">
+                  <a href="https://www.epigenelabs.com/resources/?e-page-905ab4c=3" target="_blank" rel="noopener">
+                    Startups: why young scientists are taking the leap
+                  </a>
+                </h4>
+                <div class="entry-meta">
+                  <span class="outlet">Le Monde</span>
+                  <span class="dot">·</span>
+                  <span class="lang">in French</span>
+                </div>
+              </div>
+              <span class="entry-arrow" aria-hidden="true">↗</span>
+            </article>
+            <article class="entry">
+              <div class="entry-main">
+                <h4 class="entry-title">
+                  <a href="https://entrepreneurs.lesechos.fr/creation-entreprise/reseaux-accompagnement/les-start-up-dintelligence-artificielle-en-soutien-de-loncologie-1991840" target="_blank" rel="noopener">
+                    Artificial intelligence startups supporting oncology
+                  </a>
+                </h4>
+                <div class="entry-meta">
+                  <span class="outlet">Les Echos</span>
+                  <span class="dot">·</span>
+                  <span class="lang">in French</span>
+                </div>
+              </div>
+              <span class="entry-arrow" aria-hidden="true">↗</span>
+            </article>
+            <article class="entry">
+              <div class="entry-main">
+                <h4 class="entry-title">
+                  <a href="https://www.lemonde.fr/sciences/article/2019/05/25/adebayo-alonge-detecteur-de-faux-medicaments_5467270_1650684.html" target="_blank" rel="noopener">
+                    Akpeli Nordor featured in Le Monde as Hello Tomorrow jury member
+                  </a>
+                </h4>
+                <div class="entry-meta">
+                  <span class="outlet">Le Monde</span>
+                  <span class="dot">·</span>
+                  <span class="lang">in French</span>
+                </div>
+              </div>
+              <span class="entry-arrow" aria-hidden="true">↗</span>
+            </article>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="ftr">
+      <div class="ftr-grid">
+        <div class="ftr-meta">© 2026 Akpeli Nordor &nbsp;·&nbsp; All rights reserved</div>
+        <div class="ftr-social" aria-label="Social">
+          <a href="https://www.linkedin.com/in/akpelinordor" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5V9h3v10zM6.5 7.7a1.74 1.74 0 1 1 0-3.48 1.74 1.74 0 0 1 0 3.48zM19 19h-3v-5.3c0-1.26-.02-2.88-1.75-2.88-1.76 0-2.03 1.37-2.03 2.79V19h-3V9h2.88v1.36h.04A3.16 3.16 0 0 1 15 8.75c3.04 0 3.6 2 3.6 4.59V19z"/></svg></a>
+        <a href="https://x.com/akpelin" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M18.244 2H21l-6.52 7.45L22 22h-6.063l-4.75-6.213L5.74 22H3l6.97-7.97L2 2h6.21l4.293 5.676L18.244 2zm-1.062 18h1.682L7.91 4H6.105l11.077 16z"/></svg></a>
+        <a href="https://github.com/akpelinordor" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.63 22.42c.57.11.78-.25.78-.55v-2.1c-3.2.7-3.87-1.36-3.87-1.36-.52-1.34-1.28-1.7-1.28-1.7-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.78 2.71 1.27 3.37.97.1-.76.4-1.27.74-1.56-2.55-.3-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.3-.52-1.47.11-3.07 0 0 .97-.31 3.19 1.18a11 11 0 0 1 5.81 0c2.21-1.49 3.18-1.18 3.18-1.18.64 1.6.24 2.77.12 3.07.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.69.41.36.78 1.07.78 2.16v3.2c0 .31.21.67.79.55A11.5 11.5 0 0 0 12 .5z"/></svg></a>
+        <a href="https://www.instagram.com/akpelinor/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://bsky.app/profile/akpeli.bsky.social" target="_blank" rel="noopener" aria-label="Bluesky"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M6.34 4.5c2.55 1.92 5.29 5.8 6.29 7.88.99-2.08 3.74-5.96 6.29-7.88 1.84-1.39 4.83-2.46 4.83.96 0 .68-.39 5.71-.62 6.53-.8 2.84-3.7 3.57-6.29 3.13 4.52.77 5.67 3.31 3.18 5.85-4.71 4.84-6.78-1.21-7.31-2.76-.1-.28-.14-.41-.14-.3 0-.11-.05.02-.14.3-.53 1.55-2.6 7.6-7.31 2.76-2.49-2.54-1.34-5.08 3.18-5.85-2.59.44-5.49-.29-6.29-3.13C1.78 11.17 1.39 6.14 1.39 5.46c0-3.42 2.99-2.35 4.83-.96H6.34z"/></svg></a>
+        </div>
+        <div class="ftr-set">
+        Designed &amp; built with Claude AI
+      </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.05 });
+    reveals.forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
