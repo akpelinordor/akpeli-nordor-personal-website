@@ -1,4 +1,24 @@
 <!doctype html>
+<!--
+  ══════════════════════════════════════════════════════════════════
+   MARGINALIA NUMBERING SYSTEM  (applies to all pages on this site)
+  ──────────────────────────────────────────────────────────────────
+   Each top-level page gets a sequential § NN. Sub-sections inside
+   a page use lowercase Roman numerals appended after a dot.
+   Pages with only one section omit the suffix.
+
+     § 01   Home         .i Hero · .ii Point of View · .iii Now · .iv Connect
+     § 02   About        (single section)
+     § 03   Resources    .i Publications · .ii Media
+     § 04   Contact      (single section)
+
+   When adding a new page:
+     1. Give it the next available § NN (e.g. § 05).
+     2. If it has multiple sub-sections, number them § NN.i, § NN.ii, …
+     3. If it has one section, use § NN with no suffix.
+     4. Keep the order consistent with the site navigation.
+  ══════════════════════════════════════════════════════════════════
+-->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -94,7 +114,7 @@
     text-transform: uppercase;
     color: var(--ink-rule);
     margin-bottom: 28px;
-    display: flex; align-items: center; gap: 12px;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
   }
   .hero-eyebrow .ph { font-size: 13px; opacity: 0.7; }
   .hero-eyebrow .dot { opacity: 0.4; }
@@ -524,11 +544,48 @@
     .hero-mark { display: none; }
     .pov-title { font-size: 28px; }
     .connect-title { font-size: 40px; }
+    .contact-title { font-size: 44px; }
     .mast-meta { display: none; }
     .mast-nav { gap: 22px; }
     .ftr-grid { grid-template-columns: 1fr; } .ftr-social { grid-column: 1 / -1; padding-top: 12px; }
     .ftr-set { grid-column: 1 / -1; text-align: left; padding-top: 16px;
       border-top: 1px solid var(--ink-12); }
+  }
+
+  /* ── Narrow phones (Safari iOS / Android Chrome at 375–560px) ───── */
+  @media (max-width: 560px) {
+    main { padding: 0 20px; }
+    .mast, .mast-meta { padding-left: 20px; padding-right: 20px; }
+    .mast { gap: 16px; }
+    .mast-mark { font-size: 22px; }
+    .mast-nav { gap: 14px; flex-wrap: wrap; }
+    .mast-nav a { font-size: 13px; padding: 14px 0; min-height: 44px;
+      display: inline-flex; align-items: center; }
+    .ftr { padding-left: 20px; padding-right: 20px; }
+    .section--alt { margin: 0 -20px; padding-left: 20px; padding-right: 20px; }
+
+    .hero { padding: 48px 0 40px; }
+    .hero-title { font-size: 40px; }
+    .hero-stack { margin-top: 32px; padding-top: 22px; }
+    .hero-stack > p { font-size: 18px; }
+    .hero-stack .last { font-size: 22px; }
+
+    .pov-title { font-size: 24px; }
+    .pov-body p { font-size: 17px; }
+    .pov-body .closing { font-size: 18px; }
+
+    .now-title { font-size: 26px; }
+    .now-body { font-size: 17px; }
+
+    .connect-title { font-size: 32px; }
+    .connect-body { font-size: 17px; }
+
+    .contact { padding: 64px 0 48px; }
+    .contact-title { font-size: 40px; }
+    .contact-lede { font-size: 17px; margin-bottom: 40px; }
+    .input, .textarea, .select { font-size: 16px; } /* prevent iOS focus zoom */
+
+    .ftr-social a, .ftr-social .soon { width: 44px; height: 44px; }
   }
 </style>
 </head>
@@ -778,7 +835,7 @@ const Contact = () => {
       <section className="contact" data-screen-label="Contact">
         <div className="grid">
           <div className="grid-meta">
-            <div className="sec-num">§ 01.v</div>
+            <div className="sec-num">§ 04</div>
             <div className="sec-label">Contact</div>
           </div>
           <div className="grid-content">
@@ -798,7 +855,7 @@ const Contact = () => {
     <section className="contact" data-screen-label="Contact">
       <div className="grid">
         <div className="grid-meta">
-          <div className="sec-num">§ 05</div>
+          <div className="sec-num">§ 04</div>
           <div className="sec-label">Contact</div>
         </div>
         <div className="grid-content">

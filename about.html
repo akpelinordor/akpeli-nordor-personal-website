@@ -1,4 +1,24 @@
 <!doctype html>
+<!--
+  ══════════════════════════════════════════════════════════════════
+   MARGINALIA NUMBERING SYSTEM  (applies to all pages on this site)
+  ──────────────────────────────────────────────────────────────────
+   Each top-level page gets a sequential § NN. Sub-sections inside
+   a page use lowercase Roman numerals appended after a dot.
+   Pages with only one section omit the suffix.
+
+     § 01   Home         .i Hero · .ii Point of View · .iii Now · .iv Connect
+     § 02   About        (single section)
+     § 03   Resources    .i Publications · .ii Media
+     § 04   Contact      (single section)
+
+   When adding a new page:
+     1. Give it the next available § NN (e.g. § 05).
+     2. If it has multiple sub-sections, number them § NN.i, § NN.ii, …
+     3. If it has one section, use § NN with no suffix.
+     4. Keep the order consistent with the site navigation.
+  ══════════════════════════════════════════════════════════════════
+-->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -128,7 +148,7 @@
     margin: 0 0 8px;
     text-wrap: balance;
   }
-  .bio-name .accent { font-style: italic; }
+  .bio-name .accent { font-style: normal; }
   .bio-role {
     font-family: var(--mono);
     font-size: 11px;
@@ -282,6 +302,7 @@
     .ftr { padding-left: 32px; padding-right: 32px; }
     .about { padding: 56px 0 48px; }
     .about-grid { grid-template-columns: 1fr; gap: 28px; }
+    .about-meta { padding-top: 0; }
     .about-body { grid-template-columns: 1fr; gap: 40px; }
     .portrait { position: static; max-width: 380px; }
     .bio-name { font-size: 44px; }
@@ -292,6 +313,31 @@
     .ftr-set { grid-column: 1 / -1; text-align: left; padding-top: 16px;
       border-top: 1px solid var(--ink-12); }
     .bio-body p.first::first-letter { font-size: 52px; }
+  }
+
+  /* ── Narrow phones (Safari iOS / Android Chrome at 375–560px) ───── */
+  @media (max-width: 560px) {
+    main { padding: 0 20px; }
+    .mast, .mast-meta { padding-left: 20px; padding-right: 20px; }
+    .mast { gap: 16px; }
+    .mast-mark { font-size: 22px; }
+    .mast-nav { gap: 14px; flex-wrap: wrap; }
+    .mast-nav a { font-size: 13px; padding: 14px 0; min-height: 44px;
+      display: inline-flex; align-items: center; }
+    .ftr { padding-left: 20px; padding-right: 20px; }
+
+    .about { padding: 40px 0 40px; }
+    .bio-name { font-size: 36px; }
+    .bio-role { font-size: 10px; margin-bottom: 24px; padding-bottom: 20px; }
+    .bio-lede { font-size: 17px; margin-bottom: 28px; }
+    .bio-body p { font-size: 16px; line-height: 1.65; }
+    .bio-body p.first::first-letter { font-size: 44px; padding-right: 8px; }
+    .cv-row { margin-top: 40px; }
+
+    .portrait-cap { font-size: 10px; padding: 10px 12px 12px; }
+    .portrait-meta .row { grid-template-columns: 72px 1fr; gap: 8px; }
+
+    .ftr-social a, .ftr-social .soon { width: 44px; height: 44px; }
   }
 </style>
 </head>
