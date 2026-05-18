@@ -103,10 +103,12 @@
   .section + .section { border-top: 1px solid var(--ink-12); }
   .section--alt + .section { border-top: none; }
 
+  /* ── Page head (top-level § 01 / HOME marker) ─────── */
+  .page-head { padding: 64px 0 0; }
+
   /* ── Hero ─────────────────────────────────────────── */
-  .hero { padding: 120px 0 96px; position: relative; }
-  .hero .grid { grid-template-columns: 200px 1fr; }
-  .hero-mark { position: absolute; top: 96px; right: 0; opacity: 0.55; }
+  .hero { padding: 56px 0 96px; position: relative; }
+  .hero-mark { position: absolute; top: 32px; right: 0; opacity: 0.55; }
   .hero-eyebrow {
     font-family: var(--mono);
     font-size: 11px;
@@ -114,10 +116,21 @@
     text-transform: uppercase;
     color: var(--ink-rule);
     margin-bottom: 28px;
-    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    display: flex; align-items: center; flex-wrap: wrap;
+    gap: 0;
   }
-  .hero-eyebrow .ph { font-size: 13px; opacity: 0.7; }
-  .hero-eyebrow .dot { opacity: 0.4; }
+  /* Each tag carries its trailing bullet so a "•" can never orphan onto
+     the next line on narrow viewports. */
+  .hero-eyebrow > span {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+  .hero-eyebrow > span:not(:last-child)::after {
+    content: "•";
+    margin: 0 12px;
+    opacity: 0.4;
+  }
 
   .hero-title {
     font-family: var(--serif-display);
@@ -539,7 +552,8 @@
     .section--alt { margin: 0 -32px; padding-left: 32px; padding-right: 32px; }
     .grid { grid-template-columns: 1fr; gap: 28px; }
     .grid-meta { padding-top: 0; }
-    .hero { padding: 64px 0 56px; }
+    .page-head { padding: 40px 0 0; }
+    .hero { padding: 28px 0 56px; }
     .hero-title { font-size: 56px; }
     .hero-mark { display: none; }
     .pov-title { font-size: 28px; }
@@ -564,7 +578,8 @@
     .ftr { padding-left: 20px; padding-right: 20px; }
     .section--alt { margin: 0 -20px; padding-left: 20px; padding-right: 20px; }
 
-    .hero { padding: 48px 0 40px; }
+    .page-head { padding: 28px 0 0; }
+    .hero { padding: 20px 0 40px; }
     .hero-title { font-size: 40px; }
     .hero-stack { margin-top: 32px; padding-top: 22px; }
     .hero-stack > p { font-size: 18px; }
@@ -650,6 +665,19 @@ const Masthead = ({ current, onNav }) => {
   );
 };
 
+/* ── Page head (top-level § 01 / HOME marker) ─────── */
+const PageHead = () => (
+  <section className="page-head" data-screen-label="Page head">
+    <div className="grid">
+      <div className="grid-meta">
+        <div className="sec-num">§ 01</div>
+        <div className="sec-label">Home</div>
+      </div>
+      <div className="grid-content"></div>
+    </div>
+  </section>
+);
+
 /* ── Hero ─────────────────────────────────────────── */
 const Hero = () => (
   <section className="hero" data-screen-label="Hero">
@@ -664,11 +692,8 @@ const Hero = () => (
       <div className="grid-content">
         <div className="hero-eyebrow">
           <span>Pharmacist</span>
-          <span className="dot">•</span>
           <span>Scientist</span>
-          <span className="dot">•</span>
           <span>Founder</span>
-          <span className="dot">•</span>
           <span>Boston &amp; Paris</span>
         </div>
         <h1 className="hero-title">
@@ -991,6 +1016,7 @@ const App = () => {
       <main>
         {current === 'home' && (
           <React.Fragment>
+            <Reveal><PageHead /></Reveal>
             <Reveal><Hero /></Reveal>
             <Reveal><PointOfView /></Reveal>
             <Reveal><Now /></Reveal>
